@@ -1,7 +1,7 @@
-import Image from "next/image";
-
 export default function Home() {
   return (
-    <div></div>
+    <div className="bg-this-grey h-screen">
+
+    </div>
   );
 }
