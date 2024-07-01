@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.flex-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+@keyframes popup {
+    0%{
+        scale: 0;
+    }
+    100%{
+        scale:1;
+    }
+}
+.animate-popup{
+    animation: popup 1s;
+}
