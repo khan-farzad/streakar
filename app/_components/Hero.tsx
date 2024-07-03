@@ -5,9 +5,27 @@ import Features from "./Features";
 import Faqs from "./Faqs";
 import Contact from "./Contact";
 import { useRouter } from "next/navigation";
+import Habit from "../habits/_components/Habit";
 
 const Hero = () => {
   const router=useRouter()
+  const habits = [
+    {
+        title: "Work out for 30 minutes",
+        completed: ["2024-07-03", "2024-06-30", "2024-06-29"],
+        streak: 3,
+    },
+    {
+        title: "Read a book",
+        completed: ["2024-07-01", "2024-06-30"],
+        streak: 1,
+    },
+    {
+        title: "Do gardening",
+        completed: ["2024-07-03", "2024-07-01","2024-06-30"],
+        streak: 1,
+    },
+  ]
   return (
     <div className="">
       <div className="h-[30vh] md:h-[60vh] flex-center flex-col text-center tracking-tight md:text-3xl font-medium ">
@@ -18,6 +36,9 @@ const Hero = () => {
           width={999}
           className="scale-[50%] md:scale-100 drop-shadow-xl size-24 mb-10"
         />
+        <div className="absolute left-14 top-40 -rotate-12 drop-shadow-lg"><Habit fake prop={habits[0]} idx={0} /></div>
+        <div className="absolute right-14 top-40 rotate-12 drop-shadow-lg"><Habit fake prop={habits[1]} idx={0} /></div>
+        <div className="absolute left-14 bottom-28 rotate-12 drop-shadow-lg"><Habit fake prop={habits[2]} idx={0} /></div>
         <div>
           Unite, Collaborate, Achieve. <br />
           Streakar : where Every Task Meets Teamwork and Individual Brilliance.
