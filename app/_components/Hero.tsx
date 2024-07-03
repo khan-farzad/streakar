@@ -5,9 +5,11 @@ import Features from "./Features";
 import Faqs from "./Faqs";
 import Contact from "./Contact";
 import { useRouter } from "next/navigation";
+import useSignupModal from "../_hooks/useSignupModal";
 
 const Hero = () => {
   const router=useRouter()
+  const { isOpen, OnOpen } = useSignupModal();
   return (
     <div className="">
       <div className="h-[30vh] md:h-[60vh] flex-center flex-col text-center tracking-tight md:text-3xl font-medium ">
@@ -33,7 +35,7 @@ const Hero = () => {
           <button onClick={()=>router.push('/habits')} className="bg-this-grey text-black p-2 active:scale-90 rounded-xl border border-black">
             Try for free
           </button>
-          <button className="bg-black text-this-grey p-2 active:scale-90 rounded-xl border border-x-this-grey">
+          <button onClick={OnOpen} className="bg-black text-this-grey p-2 active:scale-90 rounded-xl border border-x-this-grey">
             Collaborate
           </button>
         </div>

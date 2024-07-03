@@ -2,20 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-
-.flex-center{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 @keyframes popup {
-    0%{
-        scale: 0;
-    }
-    100%{
-        scale:1;
-    }
+  0% {
+    scale: 0;
+  }
+  100% {
+    scale: 1;
+  }
 }
-.animate-popup{
-    animation: popup 1s;
+.animate-popup {
+  animation: popup 1s;
 }
+@keyframes popdown {
+  0% {
+    h: 0;
+  }
+  100% {
+    h: fit-content;
+  }
+}
+.animate-popdown{
+    animation: popdown 1s;
+}
+
+.no-scroll {
+    overflow: hidden;
+  }
