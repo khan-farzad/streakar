@@ -1,9 +1,11 @@
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import useSignupModal from "../_hooks/useSignupModal";
+import { useRouter } from "next/navigation";
 
 const SignupModal = () => {
+  const router = useRouter();
   const { isOpen, OnClose } = useSignupModal();
+  const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -21,10 +23,10 @@ const SignupModal = () => {
   };
 
   const signUp = async () => {
-    if(formData.password!=formData.password2)
-      return
+    if (!isLogin && formData.password != formData.password2) return;
+    let url = `/api/users/${isLogin ? "login" : "signup"}`;
     try {
-      const response = await fetch("http://localhost:3000/api/users/signup", {
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -32,12 +34,9 @@ const SignupModal = () => {
         body: JSON.stringify(formData),
       });
 
-      if (!response.ok) {
-        throw new Error("Sign up failed");
-      }
-
       const data = await response.json();
       console.log("Sign up successful", data);
+      if (response.status === 200) router.push("/habits");
     } catch (error) {
       console.error("Error:", error);
     }
@@ -48,9 +47,14 @@ const SignupModal = () => {
       onClick={OnClose}
       className="absolute inset-0 h-screen backdrop-blur-[1px] flex-center overflow-hidden animate-popdown"
     >
-      <div onClick={(e)=>e.stopPropagation()} className="size[20rem] bg-white shadow-2xl rounded-[4rem] p-10 animate-popup relative overflow-hidden z-0">
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="size[20rem] bg-white shadow-2xl rounded-[4rem] p-10 animate-popup relative overflow-hidden z-0"
+      >
         <div className="absolute bg-gradient-to-b from-this-white -z-10 to-white h-14 w-full top-0 left-0 bg-white/10 rounded-t-xl"></div>
-        <h2 className="text-3xl text-center z-50">Sign Up</h2>
+        <h2 className="text-3xl text-center z-50">
+          {isLogin ? "Login" : "Sign Up"}
+        </h2>
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -80,28 +84,35 @@ const SignupModal = () => {
               className="rounded-xl border border-this-white active:outline-none px-2 py-1"
             />
           </div>
-          <div className="flex items-center gap-2">
-            <label htmlFor="password2">Re-enter Password</label>
-            <input
-              id="password2"
-              type="password"
-              value={formData.password2}
-              required
-              onChange={handleFormChange}
-              className="rounded-xl border border-this-white active:outline-none px-2 py-1"
-            />
-          </div>
+          {!isLogin && (
+            <div className="flex items-center gap-2">
+              <label htmlFor="password2">Re-enter Password</label>
+              <input
+                id="password2"
+                type="password"
+                value={formData.password2}
+                required
+                onChange={handleFormChange}
+                className="rounded-xl border border-this-white active:outline-none px-2 py-1"
+              />
+            </div>
+          )}
           <button
             type="submit"
             className="bg-this-white w-full rounded-2xl drop-shadow-2xl py-2 text-white active:scale-90"
           >
             Jump In!
           </button>
-          <p className="text-center">
-            Already a user?{" "}
-            <a className="underline underline-this-white">Login</a>
-          </p>
         </form>
+        <p className="text-center">
+          {isLogin ? "New here? " : "Already a user? "}
+          <button
+            onClick={() => setIsLogin(!isLogin)}
+            className="underline decoration-this-white underline-offset-1"
+          >
+            {isLogin ? "Sign up" : "Login"}
+          </button>
+        </p>
       </div>
     </div>
   );

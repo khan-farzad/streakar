@@ -1,14 +1,23 @@
+"use client";
 import Image from "next/image";
-import React from "react";
+import { useEffect } from "react";
 import IPhone from "./iPhone";
 import Features from "./Features";
 import Faqs from "./Faqs";
 import Contact from "./Contact";
 import { useRouter } from "next/navigation";
 import useSignupModal from "../_hooks/useSignupModal";
+import { checkAccess } from "@/helper/checkAccess";
 
 const Hero = () => {
-  const router=useRouter()
+  const router = useRouter();
+  async function getUser() {
+    if (await checkAccess()) router.push("/habits");
+  }
+  useEffect(() => {
+    getUser();
+  }, []);
+
   const { isOpen, OnOpen } = useSignupModal();
   return (
     <div className="">
@@ -32,10 +41,16 @@ const Hero = () => {
           className="mt-72 scale-[50%] md:scale-100 hidden md:flex absolute right-[10%]"
         />
         <div className="flex-center text-base my-10 gap-8">
-          <button onClick={()=>router.push('/habits')} className="bg-this-grey text-black p-2 active:scale-90 rounded-xl border border-black">
+          <button
+            onClick={() => router.push("/habits")}
+            className="bg-this-grey text-black p-2 active:scale-90 rounded-xl border border-black"
+          >
             Try for free
           </button>
-          <button onClick={OnOpen} className="bg-black text-this-grey p-2 active:scale-90 rounded-xl border border-x-this-grey">
+          <button
+            onClick={OnOpen}
+            className="bg-black text-this-grey p-2 active:scale-90 rounded-xl border border-x-this-grey"
+          >
             Collaborate
           </button>
         </div>
