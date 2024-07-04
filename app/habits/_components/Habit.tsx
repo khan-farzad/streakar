@@ -1,8 +1,12 @@
+import Image from "next/image";
+import { useEffect, useState } from "react";
+
 interface HabitProps {
   prop: {
     title: string;
-    completed: string[];
+    dates: string[];
     streak: number;
+    bro?: number;
   };
   idx: number;
   fake?: boolean;
@@ -13,17 +17,46 @@ const Habit = ({ prop, idx, fake }: HabitProps) => {
   const streak = 4;
   const todayIdx = new Date().getDay();
   const completed = false;
-  const x = new Date(prop.completed[0]);
-  const y = x.getDay();
+  const x = new Date(prop.dates[0]);
+  const y = x.getDay() || 0;
   const bgColors = ["#feeddd", "#fbcdc5", "#e9cf8c", "#ddd5f3"];
+  const [bro, setBro] = useState("Bro");
+  const [avatar, setAvatar] = useState(1);
+
+  const collaboratorInfo = async () => {
+    try {
+      const response = await fetch("/api/users/" + prop.bro, {
+        method: "GET",
+      });
+      const data = await response.json();
+      setBro(data.username);
+      setAvatar(data.avatar || 1);
+      // console.log(await response.json())
+    } catch (error) {}
+  };
+  useEffect(() => {
+    if (prop.bro) collaboratorInfo();
+  }, []);
 
   return (
     <div
       style={{ backgroundColor: `${bgColors[idx % 4]}` }}
       className={`${
         idx % 2 === 0 ? "-skew-y-1 skew-x-1" : "skew-y-1 -skew-x-1"
-      } rounded-3xl box-content p-1.5 gap-2 flex flex-col justify-between  items-center`}
+      } rounded-3xl box-content p-1.5 gap-2 flex flex-col justify-between relative items-center`}
     >
+      {prop.bro && (
+        <div className="absolute -top-3 -right-3">
+          <Image
+            alt="bro-avatar"
+            src={"/avatar" + avatar + ".png"}
+            height={99}
+            width={99}
+            className="size-10"
+          />
+          <p className="text-xs text-center">{bro}</p>
+        </div>
+      )}
       <div
         style={{
           backgroundColor: `#fff`,
@@ -42,7 +75,7 @@ const Habit = ({ prop, idx, fake }: HabitProps) => {
         <p
           className={`text-primary text-cnter ${fake ? "text-xs" : "text-sm"}`}
         >
-          🔥 Streak: {prop.streak} days 🔥
+          🔥 Streak: {prop.streak || 0} days 🔥
         </p>
         <div
           className={`flex justify-between items-center ${
@@ -55,8 +88,8 @@ const Habit = ({ prop, idx, fake }: HabitProps) => {
               className={`rounded-full ${
                 fake ? "size-5 p-1.5" : "size-6 p-2.5"
               }  flex justify-center items-center ${
-                prop.completed.includes(
-                  new Date(Date.parse(prop.completed[0]) - (y - idx) * 86400000)
+                prop.dates.includes(
+                  new Date(new Date().valueOf() - (y - idx) * 86400000)
                     .toJSON()
                     .substring(0, 10)
                 )

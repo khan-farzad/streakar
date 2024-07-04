@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Password cannot be empty"],
   },
+  avatar: Number,
   accessToken: String,
   verifyAccessExpiry: Date,
 });

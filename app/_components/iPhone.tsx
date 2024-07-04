@@ -11,19 +11,19 @@ const IPhone = () => {
   const habits = [
     {
       title: "Work out for 30 minutes",
-      completed: ["2024-07-03", "2024-07-02", "2024-07-01","2024-06-30"],
+      dates: ["2024-07-03", "2024-07-02", "2024-07-01", "2024-06-30"],
       streak: 33,
-  },
-  {
+    },
+    {
       title: "Read a book",
-      completed: ["2024-07-03", "2024-07-02"],
+      dates: ["2024-07-03", "2024-07-02"],
       streak: 2,
-  },
-  {
+    },
+    {
       title: "Do gardening",
-      completed: ["2024-07-03", "2024-07-01","2024-06-30"],
+      dates: ["2024-07-03", "2024-07-01", "2024-06-30"],
       streak: 1,
-  },
+    },
   ];
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);

@@ -29,6 +29,7 @@ export async function POST(request: NextRequest) {
       {
         username: username,
         password: user.password,
+        avatar: user.avatar,
       },
       process.env.TOKEN_SECRET!
     );

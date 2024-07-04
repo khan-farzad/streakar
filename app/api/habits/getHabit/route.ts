@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
     const habits = await Habit.find({ owner: user._id });
     console.log(habits);
     return NextResponse.json(
-      { message: "Successfully loaded habits" },
+      { message: "Successfully loaded habits", habits },
       { status: 200 }
     );
   } catch (error) {

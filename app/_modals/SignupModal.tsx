@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import useSignupModal from "../_hooks/useSignupModal";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { FaAngleRight } from "react-icons/fa6";
 
 const SignupModal = () => {
   const router = useRouter();
@@ -10,7 +12,11 @@ const SignupModal = () => {
     username: "",
     password: "",
     password2: "",
+    avatarIndex: 1,
   });
+  const [avatarIndex, setAvatarIndex] = useState<number>(
+    Math.floor(Math.random() * 3) + 1
+  );
 
   if (!isOpen) return null;
 
@@ -26,6 +32,7 @@ const SignupModal = () => {
     if (!isLogin && formData.password != formData.password2) return;
     let url = `/api/users/${isLogin ? "login" : "signup"}`;
     try {
+      formData.avatarIndex = avatarIndex;
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -42,6 +49,14 @@ const SignupModal = () => {
     }
   };
 
+  const handleAvatarChange = (change: number) => {
+    if (change > 0) {
+      setAvatarIndex(Math.min(avatarIndex + 1, 4));
+      return;
+    }
+    setAvatarIndex(Math.max(avatarIndex - 1, 1));
+  };
+
   return (
     <div
       onClick={OnClose}
@@ -55,12 +70,37 @@ const SignupModal = () => {
         <h2 className="text-3xl text-center z-50">
           {isLogin ? "Login" : "Sign Up"}
         </h2>
+        {!isLogin && (
+          <div className=" rounded-full flex-center mt-4 gap-2">
+            {avatarIndex > 1 && (
+              <FaAngleRight
+                onClick={() => handleAvatarChange(-1)}
+                size={10}
+                className="rotate-180 text-black/20 active:scale-50 cursor-pointer"
+              />
+            )}
+            <Image
+              alt="avatar"
+              src={"/avatar" + avatarIndex + ".png"}
+              height={50}
+              width={50}
+              className="pointer-events-none "
+            />
+            {avatarIndex < 4 && (
+              <FaAngleRight
+                onClick={() => handleAvatarChange(1)}
+                size={10}
+                className="text-black/20 active:scale-50 cursor-pointer"
+              />
+            )}
+          </div>
+        )}
         <form
           onSubmit={(e) => {
             e.preventDefault();
             signUp();
           }}
-          className="flex w-full flex-col gap-4 text-sm mt-8"
+          className="flex w-full flex-col gap-4 text-sm mt-4"
         >
           <div className="flex items-center justify-between gap-2 ">
             <label htmlFor="username">Username</label>
