@@ -1,4 +1,5 @@
 'use client'
+import Habits from "./_components/Habits";
 import { checkAccess } from "@/helper/checkAccess"
 import { useEffect, useState } from "react"
 
@@ -7,16 +8,15 @@ const page = () => {
   async function getUser() {
     const x = await checkAccess()
     setUser(x.user)
-    console.log(user)
   }
   useEffect(() => {
-    console.log(getUser())
+    getUser()
   }, [])
 
   return (
-    <div>
+    <div className="bg-this-grey h-screen">
         <h2>Hi, {user}</h2>
-
+         <Habits />
     </div>
   )
 }

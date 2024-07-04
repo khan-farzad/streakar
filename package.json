@@ -1,5 +1,5 @@
 {
-  "name": "Streakar",
+  "name": "streakar",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.1",
+    "gsap": "^3.12.5",
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.4",

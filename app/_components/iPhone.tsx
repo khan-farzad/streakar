@@ -1,11 +1,48 @@
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IoIosBatteryFull, IoIosWifi } from "react-icons/io";
 import { TbAntennaBars5 } from "react-icons/tb";
+import Habit from "../habits/_components/Habit";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const IPhone = () => {
+  const habits = [
+    {
+      title: "Work out for 30 minutes",
+      completed: ["2024-07-03", "2024-07-02", "2024-07-01","2024-06-30"],
+      streak: 33,
+  },
+  {
+      title: "Read a book",
+      completed: ["2024-07-03", "2024-07-02"],
+      streak: 2,
+  },
+  {
+      title: "Do gardening",
+      completed: ["2024-07-03", "2024-07-01","2024-06-30"],
+      streak: 1,
+  },
+  ];
+  useGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.to("#habit1", {
+      x: 0,
+      y: 0,
+      rotate: 0,
+      scrollTrigger: {
+        trigger: "#iphone",
+        scrub: true,
+        markers: true,
+        start: "top 62%",
+        end: "center 70%",
+      },
+    });
+  }, []);
+
   return (
-    <div className="rounded-3xl h-[799px] w-[399px] relative py-6">
+    <div id="iphone" className="rounded-3xl h-[799px] w-[399px] relative py-6">
       {" "}
       <Image
         alt="iphone"
@@ -33,6 +70,26 @@ const IPhone = () => {
           />
         </div>
         <h3 className="text-center text-2xl py-2">Hi, Anon👋</h3>
+        <div className="flex flex-col items-center gap-3">
+          <div
+            id="habit1"
+            className="absolute -rotate-12 -translate-x-[34rem] -translate-y-[40rem] drop-shadow-lg"
+          >
+            <Habit fake prop={habits[0]} idx={0} />
+          </div>
+          <div
+            id="habit1"
+            className="absolute top-80 rotate-12 translate-x-[34rem] -translate-y-[50rem] drop-shadow-lg"
+          >
+            <Habit fake prop={habits[1]} idx={1} />
+          </div>
+          <div
+            id="habit1"
+            className="absolute top-[30rem] -rotate-12 -translate-x-[34rem] -translate-y-[25rem] drop-shadow-lg"
+          >
+            <Habit fake prop={habits[2]} idx={2} />
+          </div>
+        </div>
       </div>
     </div>
   );

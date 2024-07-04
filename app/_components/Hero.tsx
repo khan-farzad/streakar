@@ -14,16 +14,18 @@ const Hero = () => {
   async function getUser() {
     if (await checkAccess()) router.push("/habits");
   }
+  
   useEffect(() => {
     getUser();
   }, []);
 
   const { isOpen, OnOpen } = useSignupModal();
+
   return (
     <div className="">
       <div className="h-[30vh] md:h-[60vh] flex-center flex-col text-center tracking-tight md:text-3xl font-medium ">
         <Image
-          alt="pointer"
+          alt="logo2"
           src={"/logo2.png"}
           height={999}
           width={999}

@@ -2,11 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-.flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.flex-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 @keyframes popup {
   0% {
     scale: 0;
@@ -18,6 +19,7 @@
 .animate-popup {
   animation: popup 1s;
 }
+
 @keyframes popdown {
   0% {
     h: 0;
@@ -32,4 +34,4 @@
 
 .no-scroll {
     overflow: hidden;
-  }
+ }
