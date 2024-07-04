@@ -2,6 +2,7 @@
 import Hero from "./_components/Hero";
 import Navbar from "./_components/Navbar";
 import NotiModal from "./_modals/NotiModal";
+import SignupModal from "./_modals/SignupModal";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       <Navbar/>
       <Hero/>
       <NotiModal/>
+      <SignupModal/>
     </div>
   );
 }
