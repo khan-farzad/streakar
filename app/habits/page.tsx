@@ -27,24 +27,13 @@ const page = () => {
     getUser();
   }, []);
 
-  const handleLogout = async () => {
-    try {
-      const res = await fetch("/api/users/logout", { method: "POST" });
-      if (res.status === 200) router.push("/");
-      console.log(await res.json());
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const [bro, setBro] = useState<{ username: string; avatar: number }>({
     username: "",
     avatar: 0,
   });
   return (
     <div className="bg-this-grey min-h-screen">
-      <button onClick={handleLogout}>logout</button>
-      {/* <ApprovalModal/> */}
+      <ApprovalModal/>
       <NotiModal />
       <InviteModal bro={bro} setBro={setBro} />
       <CreateHabitModal bro={bro} setBro={setBro} />
@@ -58,7 +47,7 @@ const page = () => {
               width={50}
               height={50}
             />
-            <h2 className="font-semibold text-4xl">Hi, {user}</h2>
+            <h2 className="font-semibold text-4xl">Hi, {user}👋</h2>
           </div>
           <div className="mt-12">
             <Habits />

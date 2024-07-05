@@ -17,23 +17,6 @@ const InviteModal = ({
 }) => {
   const [users, setUsers] = useState<any[]>([]);
   const [query, setQuery] = useState<string>("");
-  const bros = [
-    {
-      avatar: 4,
-      username: "Puj",
-      fullName: "Pulkit Jain",
-    },
-    {
-      avatar: 7,
-      username: "Atif",
-      fullName: "Atif Khan",
-    },
-    {
-      avatar: 10,
-      fullName: "John DOe",
-      username: "John",
-    },
-  ];
   const getUsers = async () => {
     try {
       const users = await fetch("/api/users");
@@ -64,23 +47,23 @@ const InviteModal = ({
   return (
     <div
       onClick={inviteModal.OnClose}
-      className="absolute border border-gray-500 z-[100] flex-center inset-0 backdrop-blur-[2px] h-full rounded-xl shadow-lg"
+      className="absolute border border-gray-500 z-[10002] flex-center inset-0 backdrop-blur-[2px] h-full rounded-xl shadow-lg"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="h-2/3 w-2/5 bg-white flex flex-col p-4 gap-4 rounded-xl"
+        className="h-2/3 w-[30%] bg-white flex flex-col p-4 gap-4 rounded-xl tracking-tighter shadow-xl"
       >
         <div className="flex justify-between gap-10">
           <div className="flex gap-2 flex-col">
             <h4 className="text-3xl font-semibold">Invite your buddy</h4>
-            <p className="font-light">
+            <p className="font-light text-xs">
               You can invite your buddy to motivate each other and stay on track
               with your habits.{" "}
             </p>
           </div>
-          <div className="bg-white rounded-full size-6 flex-center">
+          <button onClick={inviteModal.OnClose} className="bg-white rounded-full size-6 flex-center">
             <IoIosClose size={28} />
-          </div>
+          </button>
         </div>
         <div className="flex justify-between gap-0">
           <div className="rounded-xl border-2 border-r-0 grow border-gray-500 h-10 rounded-r-none p-1">

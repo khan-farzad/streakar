@@ -1,3 +1,7 @@
+import useApprovalModal from "@/app/_hooks/useApprovalModa";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import Draggable from "gsap/Draggable";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -24,6 +28,8 @@ const Habit = ({ prop, idx, fake }: HabitProps) => {
   const bgColors = ["#feeddd", "#fbcdc5", "#e9cf8c", "#ddd5f3"];
   const [bro, setBro] = useState("Bro");
   const [avatar, setAvatar] = useState(1);
+  const {OnOpen,setHabit}=useApprovalModal()
+
 
   const collaboratorInfo = async () => {
     try {
@@ -33,7 +39,6 @@ const Habit = ({ prop, idx, fake }: HabitProps) => {
       const data = await response.json();
       setBro(data.username);
       setAvatar(data.avatar || 1);
-      // console.log(await response.json())
     } catch (error) {}
   };
 
@@ -80,8 +85,15 @@ const Habit = ({ prop, idx, fake }: HabitProps) => {
     if (prop.bro) collaboratorInfo();
   }, []);
 
+  gsap.registerPlugin(Draggable)
+
+  useGSAP(()=>{
+    Draggable.create('#habit')
+  },[])
+
   return (
     <div
+    id="habit"
       style={{ backgroundColor: `${bgColors[idx % 4]}` }}
       className={`${
         idx % 2 === 0 ? "-skew-y-1 skew-x-1" : "skew-y-1 -skew-x-1"
@@ -112,7 +124,7 @@ const Habit = ({ prop, idx, fake }: HabitProps) => {
             fake ? "text-base" : "text-xl"
           } font-medium text-[#352364]`}
         >
-          {prop.title} {prop._id}
+          {prop.title}
         </h3>
         <p
           className={`text-primary text-cnter ${fake ? "text-xs" : "text-sm"}`}
@@ -127,9 +139,10 @@ const Habit = ({ prop, idx, fake }: HabitProps) => {
           {days.map((day, idx) => (
             <div
               key={idx + day}
+              onClick={()=>{OnOpen(),setHabit({...prop,broName:bro})}}
               className={`rounded-full ${
                 fake ? "size-5 p-1.5" : "size-6 p-2.5"
-              }  flex justify-center items-center ${
+              }  flex justify-center items-center  ${
                 prop.dates.includes(
                   new Date(new Date().valueOf() - (y - idx) * 86400000)
                     .toJSON()
@@ -137,7 +150,7 @@ const Habit = ({ prop, idx, fake }: HabitProps) => {
                 )
                   ? "bg-[#8765e8] text-white"
                   : "border-[#8765e8] border text-[#8765e8]"
-              } ${!fake && idx === todayIdx && "animate-bounce"}`}
+              } ${!fake && idx === todayIdx && "animate-bounce cursor-pointer"}`}
             >
               {day}
             </div>

@@ -2,6 +2,7 @@ import React from "react";
 import NotificationIcon from "./NotificationIcon";
 import NewIcon from "./NewIcon";
 import Image from "next/image";
+import LogoutIcon from "./LogoutIcon";
 
 const Navbar = ({ habitsPage }: { habitsPage?: boolean }) => {
   return (
@@ -19,6 +20,7 @@ const Navbar = ({ habitsPage }: { habitsPage?: boolean }) => {
       <div className="flex-center gap-4">
         <NewIcon />
         <NotificationIcon />
+        {habitsPage && <LogoutIcon />}
       </div>
     </div>
   );

@@ -5,12 +5,12 @@ import useCreateHabitModal from "../_hooks/UseCreateHabitModal";
 const NewIcon = () => {
   const { OnOpen } = useCreateHabitModal();
   return (
-    <div
+    <button
       onClick={OnOpen}
-      className="size-8 rounded-lg bg-red-300 flex-center text-this-grey text-2xl"
+      className="size-8 rounded-lg bg-red-300 flex-center text-this-grey text-2xl active:scale-90"
     >
       <IoIosAdd />
-    </div>
+    </button>
   );
 };
 

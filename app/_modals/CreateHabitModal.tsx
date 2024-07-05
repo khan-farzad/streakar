@@ -4,6 +4,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { IoCheckmark } from "react-icons/io5";
 import useInviteModal from "../_hooks/useInviteModal";
 import Image from "next/image";
+import { FiPlus } from "react-icons/fi";
 
 const CreateHabitModal = ({
   bro,
@@ -53,21 +54,30 @@ const CreateHabitModal = ({
   return (
     <div
       onClick={OnClose}
-      className="absolute z-[99] inset-0 h-full backdrop-blur-[2px] flex-center animate-popup"
+      className="absolute z-[10001] inset-0 h-full backdrop-blur-[2px] flex-center animate-popup"
     >
       <div
         onClick={(e) => e.stopPropagation()}
         className=" min-w-[40%] bg-[#ddd5f3] rounded-3xl p-1.5 flex-center flex-col relative"
       >
         <div onClick={inviteModal.OnOpen} className="absolute -top-2 -right-3">
-          {bro.username ? bro.username : "add buddy"}
-          {bro.avatar && (
-            <Image
-              src={`/avatar${bro.avatar}.png`}
-              alt="avatar"
-              height={50}
-              width={50}
-            />
+          {!bro.username ? (
+            <button className="flex-center flex-col bg-[#e9cf8c] p-2 rounded-full size size-16 text-[8px] active:scale-90">
+              <FiPlus size={20} />
+              {"add a buddy"}
+            </button>
+          ) : (
+            <>
+              {bro.avatar > 0 && (
+                <Image
+                  src={`/avatar${bro.avatar}.png`}
+                  alt="avatar"
+                  height={50}
+                  width={50}
+                />
+              )}
+              {bro.username}
+            </>
           )}
         </div>
         <div
