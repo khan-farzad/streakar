@@ -8,7 +8,7 @@ const NotiModal = () => {
   return (
     <div
       onClick={OnClose}
-      className="absolute inset-0 h-screen backdrop-blur flex-center overflow-hidden "
+      className="absolute z-10 inset-0 h-screen backdrop-blur flex-center overflow-hidden "
     >
       <div className="size-[30rem] bg-black rounded-[4rem] p-10 animate-popup text-this-grey relative overflow-hidden">
         <div className="absolute h-10 w-1/2 bottom-[30%] left-0 bg-white/10 rounded-t-xl"></div>

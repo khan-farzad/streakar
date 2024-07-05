@@ -14,7 +14,7 @@ const Hero = () => {
   async function getUser() {
     if (await checkAccess()) router.push("/habits");
   }
-  
+
   useEffect(() => {
     getUser();
   }, []);
@@ -44,7 +44,7 @@ const Hero = () => {
         />
         <div className="flex-center text-base my-10 gap-8">
           <button
-            onClick={() => router.push("/habits")}
+            onClick={OnOpen}
             className="bg-this-grey text-black p-2 active:scale-90 rounded-xl border border-black"
           >
             Try for free

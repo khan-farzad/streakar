@@ -15,7 +15,7 @@ const SignupModal = () => {
     avatarIndex: 1,
   });
   const [avatarIndex, setAvatarIndex] = useState<number>(
-    Math.floor(Math.random() * 3) + 1
+    Math.floor(Math.random() * 9) + 1
   );
 
   if (!isOpen) return null;
@@ -42,7 +42,7 @@ const SignupModal = () => {
       });
 
       const data = await response.json();
-      console.log("Sign up successful", data);
+      console.log("Sign up successful");
       if (response.status === 200) router.push("/habits");
     } catch (error) {
       console.error("Error:", error);
@@ -51,7 +51,7 @@ const SignupModal = () => {
 
   const handleAvatarChange = (change: number) => {
     if (change > 0) {
-      setAvatarIndex(Math.min(avatarIndex + 1, 4));
+      setAvatarIndex(Math.min(avatarIndex + 1, 10));
       return;
     }
     setAvatarIndex(Math.max(avatarIndex - 1, 1));
@@ -84,9 +84,9 @@ const SignupModal = () => {
               src={"/avatar" + avatarIndex + ".png"}
               height={50}
               width={50}
-              className="pointer-events-none "
+              className="pointer-events-none select-none"
             />
-            {avatarIndex < 4 && (
+            {avatarIndex < 10 && (
               <FaAngleRight
                 onClick={() => handleAvatarChange(1)}
                 size={10}

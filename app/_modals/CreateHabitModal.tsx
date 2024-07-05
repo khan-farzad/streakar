@@ -2,10 +2,24 @@ import React, { Dispatch, SetStateAction, useState } from "react";
 import useCreateHabitModal from "../_hooks/UseCreateHabitModal";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { IoCheckmark } from "react-icons/io5";
+import useInviteModal from "../_hooks/useInviteModal";
+import Image from "next/image";
 
-const CreateHabitModal = () => {
+const CreateHabitModal = ({
+  bro,
+  setBro,
+}: {
+  bro: { username: string; avatar: number };
+  setBro: Dispatch<
+    SetStateAction<{
+      username: string;
+      avatar: number;
+    }>
+  >;
+}) => {
   const [title, setTitle] = useState("Add a title");
   const { isOpen, OnClose } = useCreateHabitModal();
+  const inviteModal = useInviteModal();
   const days = ["S", "M", "T", "W", "T", "F", "S"];
   const [loading, setLoading] = useState(false);
   const [sucess, setSuccess] = useState(false);
@@ -18,16 +32,17 @@ const CreateHabitModal = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ title, bro: "Atif" }),
+        body: JSON.stringify({ title, bro: bro.username }),
       });
       if (response.status === 200) {
         setSuccess(true);
-        window.dispatchEvent(new Event('getHabits'))
+        window.dispatchEvent(new Event("getHabits"));
         setTimeout(() => {
           OnClose();
-          setSuccess(false)
-          setLoading(false)
-          setTitle('Add a title')
+          setSuccess(false);
+          setLoading(false);
+          setBro({ username: "", avatar: 0 });
+          setTitle("Add a title");
         }, 2000);
       }
     } catch (error) {
@@ -42,8 +57,19 @@ const CreateHabitModal = () => {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className=" min-w-[40%] bg-[#ddd5f3] rounded-3xl p-1.5 flex-center flex-col"
+        className=" min-w-[40%] bg-[#ddd5f3] rounded-3xl p-1.5 flex-center flex-col relative"
       >
+        <div onClick={inviteModal.OnOpen} className="absolute -top-2 -right-3">
+          {bro.username ? bro.username : "add buddy"}
+          {bro.avatar && (
+            <Image
+              src={`/avatar${bro.avatar}.png`}
+              alt="avatar"
+              height={50}
+              width={50}
+            />
+          )}
+        </div>
         <div
           className={`rounded-3xl bg-white shadow-2xl w-full flex flex-col gap-4 transition-[height,padding] duration-700 overflow-hidden ${
             loading ? "h-0" : "h-52 p-10"

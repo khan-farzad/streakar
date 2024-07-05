@@ -7,6 +7,8 @@ interface HabitProps {
     dates: string[];
     streak: number;
     bro?: number;
+    _id: string;
+    lastUpdated: string;
   };
   idx: number;
   fake?: boolean;
@@ -14,9 +16,9 @@ interface HabitProps {
 
 const Habit = ({ prop, idx, fake }: HabitProps) => {
   const days = ["S", "M", "T", "W", "T", "F", "S"];
-  const streak = 4;
+  let streak: number = 0;
+  const todayDate = new Date().toJSON().substring(0, 10);
   const todayIdx = new Date().getDay();
-  const completed = false;
   const x = new Date(prop.dates[0]);
   const y = x.getDay() || 0;
   const bgColors = ["#feeddd", "#fbcdc5", "#e9cf8c", "#ddd5f3"];
@@ -34,7 +36,47 @@ const Habit = ({ prop, idx, fake }: HabitProps) => {
       // console.log(await response.json())
     } catch (error) {}
   };
+
+  const updateHabit = async (date: string) => {
+    try {
+      const response = await fetch("/api/habits/update", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ habitId: prop._id, streak, lastUpdated: date }),
+      });
+      console.log(await response.json());
+    } catch (error) {
+      console.log(error)
+    }
+    finally {
+      console.log('m chutiya hun')
+      window.dispatchEvent(new Event('getHabits'))
+    }
+  }
+
+  const calculateStreak = async () => {
+    let { dates, lastUpdated } = prop;
+    if (lastUpdated === todayDate) {
+      return;
+    }
+    if (dates.includes(todayDate)) {
+      streak = prop.streak + 1;
+      console.log('streak increased')
+      lastUpdated = todayDate;
+      updateHabit(lastUpdated)
+    } else if (
+      !dates.includes(new Date(Date.now() - 86400000).toJSON().substring(0, 10))
+    ) {
+      console.log('streak reset')
+      streak = 0;
+      updateHabit(lastUpdated)
+    }
+  };
+  
   useEffect(() => {
+    calculateStreak();
     if (prop.bro) collaboratorInfo();
   }, []);
 
@@ -70,12 +112,12 @@ const Habit = ({ prop, idx, fake }: HabitProps) => {
             fake ? "text-base" : "text-xl"
           } font-medium text-[#352364]`}
         >
-          {prop.title}
+          {prop.title} {prop._id}
         </h3>
         <p
           className={`text-primary text-cnter ${fake ? "text-xs" : "text-sm"}`}
         >
-          🔥 Streak: {prop.streak || 0} days 🔥
+          🔥 Streak: {prop.streak} days 🔥
         </p>
         <div
           className={`flex justify-between items-center ${

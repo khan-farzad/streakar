@@ -6,6 +6,9 @@ import { useEffect, useState } from "react";
 import Navbar from "../_components/Navbar";
 import CreateHabitModal from "../_modals/CreateHabitModal";
 import { useRouter } from "next/navigation";
+import InviteModal from "../_modals/InviteModal";
+import NotiModal from "../_modals/NotiModal";
+import ApprovalModal from "../_modals/ApprovalModal";
 
 const page = () => {
   let [user, setUser] = useState<string>("");
@@ -24,9 +27,27 @@ const page = () => {
     getUser();
   }, []);
 
+  const handleLogout = async () => {
+    try {
+      const res = await fetch("/api/users/logout", { method: "POST" });
+      if (res.status === 200) router.push("/");
+      console.log(await res.json());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const [bro, setBro] = useState<{ username: string; avatar: number }>({
+    username: "",
+    avatar: 0,
+  });
   return (
     <div className="bg-this-grey min-h-screen">
-      <CreateHabitModal />
+      <button onClick={handleLogout}>logout</button>
+      {/* <ApprovalModal/> */}
+      <NotiModal />
+      <InviteModal bro={bro} setBro={setBro} />
+      <CreateHabitModal bro={bro} setBro={setBro} />
       <Navbar habitsPage={true} />
       {user && (
         <>

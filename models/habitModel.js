@@ -3,7 +3,11 @@ import User from "./userModel";
 
 const habitSchema = new mongoose.Schema({
   title: String,
-  streak: Number,
+  streak: {
+    type: Number,
+    default: 0
+  },
+  lastUpdated: String,
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: User,

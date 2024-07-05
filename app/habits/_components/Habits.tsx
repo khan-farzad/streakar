@@ -12,6 +12,7 @@ const Habits = () => {
       });
       let Rechabits = await response.json();
       setHabit(Rechabits.habits);
+      // console.log(habits)
     } catch (error) {
       console.error("Error:", error);
     }

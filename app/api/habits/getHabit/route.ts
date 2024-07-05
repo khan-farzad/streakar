@@ -12,7 +12,6 @@ export async function GET(request: NextRequest) {
     const { username }: any = decodedToken;
     const user: any = await User.findOne({ username });
     const habits = await Habit.find({ owner: user._id });
-    console.log(habits);
     return NextResponse.json(
       { message: "Successfully loaded habits", habits },
       { status: 200 }
