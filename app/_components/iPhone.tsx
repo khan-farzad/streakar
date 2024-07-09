@@ -8,26 +8,33 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const IPhone = () => {
+  const fakeDates = [
+    [true, true, true, true, false, false, false],
+    [true, false, true, true, false, false, false],
+    [false, false, false, true, false, false, false]
+  ]
+
   const habits = [
     {
       title: "Work out for 30 minutes",
-      dates: ["2024-07-03", "2024-07-02", "2024-07-01", "2024-06-30"],
+      dates: ["2024-04-27"],
       streak: 33,
       maxStreak: 33,
     },
     {
       title: "Read a book",
-      dates: ["2024-07-03", "2024-07-02"],
+      dates: ["2024-04-27"],
       streak: 2,
       maxStreak: 7,
     },
     {
+      dates: ["2024-04-27"],
       title: "Do gardening",
-      dates: ["2024-07-03", "2024-07-01", "2024-06-30"],
       streak: 1,
       maxStreak: 9,
     },
   ];
+
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
     gsap.to("#habit1", {
@@ -37,7 +44,6 @@ const IPhone = () => {
       scrollTrigger: {
         trigger: "#iphone",
         scrub: true,
-        markers: true,
         start: "top 62%",
         end: "center 70%",
       },
@@ -78,19 +84,19 @@ const IPhone = () => {
             id="habit1"
             className="absolute -rotate-12 -translate-x-[34rem] -translate-y-[40rem] drop-shadow-lg"
           >
-            <Habit fake prop={habits[0]} idx={0} />
+            <Habit fake={fakeDates[0]} prop={habits[0]} idx={0} />
           </div>
           <div
             id="habit1"
             className="absolute top-80 rotate-12 translate-x-[34rem] -translate-y-[50rem] drop-shadow-lg"
           >
-            <Habit fake prop={habits[1]} idx={1} />
+            <Habit fake={fakeDates[1]} prop={habits[1]} idx={1} />
           </div>
           <div
             id="habit1"
             className="absolute top-[30rem] -rotate-12 -translate-x-[34rem] -translate-y-[25rem] drop-shadow-lg"
           >
-            <Habit fake prop={habits[2]} idx={2} />
+            <Habit fake={fakeDates[2]} prop={habits[2]} idx={2} />
           </div>
         </div>
       </div>

@@ -50,7 +50,7 @@ const InviteModal = ({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="h-2/3 w-[30%] bg-white flex flex-col p-4 gap-4 rounded-xl tracking-tighter shadow-xl"
+        className="h-2/3 w-11/12 md:w-[30%] bg-white flex flex-col p-4 gap-4 rounded-xl tracking-tighter shadow-xl"
       >
         <div className="flex justify-between gap-10">
           <div className="flex gap-2 flex-col">

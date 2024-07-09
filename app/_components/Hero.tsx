@@ -29,7 +29,7 @@ const Hero = () => {
           src={"/logo2.png"}
           height={999}
           width={999}
-          className="scale-[50%] md:scale-100 drop-shadow-xl size-24 mb-10"
+          className="scale-[50%] md:scale-100 drop-shadow-xl size-24 mb-1"
         />
         <div>
           Unite, Collaborate, Achieve. <br />
@@ -42,7 +42,7 @@ const Hero = () => {
           width={99}
           className="mt-72 scale-[50%] md:scale-100 hidden md:flex absolute right-[10%]"
         />
-        <div className="flex-center text-base my-10 gap-8">
+        <div className="flex-center text-base my-4 md:my-10 gap-8">
           <button
             onClick={OnOpen}
             className="bg-this-grey text-black p-2 active:scale-90 rounded-xl border border-black"

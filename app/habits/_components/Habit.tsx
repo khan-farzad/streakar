@@ -16,7 +16,7 @@ interface HabitProps {
     lastUpdated?: string;
   };
   idx: number;
-  fake?: boolean;
+  fake?: boolean[];
 }
 
 const Habit = ({ prop, idx, fake }: HabitProps) => {
@@ -64,11 +64,13 @@ const Habit = ({ prop, idx, fake }: HabitProps) => {
     if (lastUpdated === todayDate) {
       return;
     }
-    if (dates.includes(todayDate)) {
+    if (dates && dates.includes(todayDate)) {
       streak = prop.streak + 1;
       lastUpdated = todayDate;
     } else if (
-      !dates.includes(new Date(Date.now() - 86400000).toJSON().substring(0, 10))
+      !dates.includes(
+        new Date(Date.now() - 86400000).toJSON().substring(0, 10)
+      )
     ) {
       streak = 0;
     }
@@ -88,11 +90,11 @@ const Habit = ({ prop, idx, fake }: HabitProps) => {
 
   return (
     <div
-      id="habit"
+      id={!fake ? "habit" : ""}
       style={{ backgroundColor: `${bgColors[idx % 4]}` }}
       className={`${
         idx % 2 === 0 ? "-skew-y-1 skew-x-1" : "skew-y-1 -skew-x-1"
-      } rounded-3xl box-content p-1.5 gap-2 flex flex-col justify-between relative items-center`}
+      } rounded-3xl w-11/12 box-content p-1.5 gap-2 flex flex-col justify-between relative items-center`}
     >
       {prop.bro && (
         <div className="absolute -top-3 -right-3">
@@ -110,8 +112,8 @@ const Habit = ({ prop, idx, fake }: HabitProps) => {
         style={{
           backgroundColor: `#fff`,
         }}
-        className={`rounded-3xl h-5/6 p-4 ${
-          fake && "text-xs w-[250px]"
+        className={`rounded-3xl h-5/6 p-4 w-full ${
+          fake && "text-xs"
         } gap-2 flex flex-col shadow-lg justify-between `}
       >
         <h3
@@ -139,8 +141,9 @@ const Habit = ({ prop, idx, fake }: HabitProps) => {
               }}
               className={`rounded-full ${
                 fake ? "size-5 p-1.5" : "size-6 p-2.5"
-              }  flex justify-center items-center  ${
-                prop.dates.includes(
+              }  flex justify-center items-center ${fake && fake[idx] ? "bg-[#8765e8] text-white"
+                  : "border-[#8765e8] border text-[#8765e8]"}  ${
+                !fake && prop.dates!.includes(
                   new Date(new Date().valueOf() - (y - idx) * 86400000)
                     .toJSON()
                     .substring(0, 10)

@@ -15,13 +15,14 @@ const Navbar = ({ habitsPage }: { habitsPage?: boolean }) => {
           <a href="#features">Features</a>
           <a href="#faqs">FAQ`s</a>
           <a href="#contact">Contact</a>
-        </div>
-      )}
-      <div className="flex-center gap-4">
+        </div>)}
+      
+      {habitsPage && (<div className="flex-center gap-4">
         <NewIcon />
         <NotificationIcon />
-        {habitsPage && <LogoutIcon />}
+        <LogoutIcon />
       </div>
+      )}
     </div>
   );
 };
