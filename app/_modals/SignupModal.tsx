@@ -40,9 +40,7 @@ const SignupModal = () => {
         },
         body: JSON.stringify(formData),
       });
-
       const data = await response.json();
-      console.log("Sign up successful");
       if (response.status === 200) router.push("/habits");
     } catch (error) {
       console.error("Error:", error);
@@ -60,11 +58,11 @@ const SignupModal = () => {
   return (
     <div
       onClick={OnClose}
-      className="absolute inset-0 h-screen backdrop-blur-[1px] flex-center overflow-hidden animate-popdown"
+      className="absolute inset-0 h-screen backdrop-blur-[1px] flex-center overflow-hidden animate-popup"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="size[20rem] bg-white shadow-2xl rounded-[4rem] p-10 animate-popup relative overflow-hidden z-0"
+        className="size[20rem] bg-white shadow-2xl rounded-[4rem] p-10 relative overflow-hidden z-0"
       >
         <div className="absolute bg-gradient-to-b from-this-white -z-10 to-white h-14 w-full top-0 left-0 bg-white/10 rounded-t-xl"></div>
         <h2 className="text-3xl text-center z-50">

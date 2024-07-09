@@ -4,7 +4,6 @@ export async function checkAccess() {
       method: "GET",
     });
     const user = await response.json();
-    console.log(user);
 
     if (user.status === 502) {
       throw new Error("Sign up failed");

@@ -12,23 +12,23 @@ export async function GET(request: NextRequest) {
     const decodedToken = await verify(request);
     const { username }: any = decodedToken;
     const user: any = await User.findOne({ username });
-    const Notis:any = await Noti.find({ reciever: user._id });
+    const Notis: any = await Noti.find({ reciever: user._id });
     const toSend = await Promise.all(
       Notis.map(async (ele: any) => {
         const sender = await User.findById(ele.sender);
-        const habit= await Habit.findById(ele.habit)
+        const habit = await Habit.findById(ele.habit);
         return {
           ...ele.toObject(), // Convert Mongoose document to plain JavaScript object
           sender: {
             avatar: sender.avatar,
             username: sender.username,
           },
-          habit:habit.title
+          habit: habit,
         };
       })
     );
     return NextResponse.json(
-      { message: "Successfully loaded Notis",toSend},
+      { message: "Successfully loaded Notis", toSend },
       { status: 200 }
     );
   } catch (error) {

@@ -54,7 +54,7 @@ const ApprovalModal = () => {
         onClick={(e) => e.stopPropagation()}
         className="min-w-[40%] bg-[#ddd5f3] rounded-3xl p-1.5 flex-center flex-col relative animate-popup"
       >
-        <p className="text-xl text-[#8765e8]">
+        <div className="text-xl text-[#8765e8]">
           {habit.bro ? (
             <p className="m-2">
               Request {habit.broName} to log today`s progress?{" "}
@@ -62,14 +62,14 @@ const ApprovalModal = () => {
           ) : (
             "Are you sure u want to log today's progress?"
           )}
-        </p>
+        </div>
         <div
           className={`relative rounded-3xl bg-white shadow-2xl w-full flex flex-col gap-4 transition-[height,padding] duration-700 overflow-hidden ${
             loading ? "h-0" : "min-h-48 p-10"
           }`}
         >
           <h2 className="text-3xl">{habit.title}</h2>
-          <p className={`text-primary text-cnter text-sm`}>
+          <p className={`text-primary text-sm`}>
             🔥 Streak: {habit.streak} days 🔥
           </p>
           <div className={`flex justify-between items-center gap-2`}>

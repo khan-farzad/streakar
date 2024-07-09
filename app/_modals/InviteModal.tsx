@@ -32,12 +32,11 @@ const InviteModal = ({
 
   const inviteModal = useInviteModal();
 
-  const filteredUser =
-    users.length > 0
-      ? users.filter((user) =>
-          user.username.toLowerCase().includes(query.toLowerCase())
-        )
-      : [];
+  const filteredUser = users
+    ? users.filter((user) =>
+        user.username.toLowerCase().includes(query.toLowerCase())
+      )
+    : [];
 
   const handleInvite = (user: any) => {
     inviteModal.OnClose();
@@ -61,13 +60,17 @@ const InviteModal = ({
               with your habits.{" "}
             </p>
           </div>
-          <button onClick={inviteModal.OnClose} className="bg-white rounded-full size-6 flex-center">
+          <button
+            onClick={inviteModal.OnClose}
+            className="bg-white rounded-full size-6 flex-center"
+          >
             <IoIosClose size={28} />
           </button>
         </div>
         <div className="flex justify-between gap-0">
           <div className="rounded-xl border-2 border-r-0 grow border-gray-500 h-10 rounded-r-none p-1">
             <input
+              autoFocus
               onChange={(e) => setQuery(e.target.value)}
               className="outline-none w-full h-full"
               value={query}

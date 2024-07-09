@@ -10,9 +10,10 @@ interface HabitProps {
     title: string;
     dates: string[];
     streak: number;
+    maxStreak: number;
     bro?: number;
-    _id: string;
-    lastUpdated: string;
+    _id?: string;
+    lastUpdated?: string;
   };
   idx: number;
   fake?: boolean;
@@ -23,13 +24,12 @@ const Habit = ({ prop, idx, fake }: HabitProps) => {
   let streak: number = 0;
   const todayDate = new Date().toJSON().substring(0, 10);
   const todayIdx = new Date().getDay();
-  const x = new Date(prop.dates[0]);
+  const x = new Date();
   const y = x.getDay() || 0;
   const bgColors = ["#feeddd", "#fbcdc5", "#e9cf8c", "#ddd5f3"];
   const [bro, setBro] = useState("Bro");
   const [avatar, setAvatar] = useState(1);
-  const {OnOpen,setHabit}=useApprovalModal()
-
+  const { OnOpen, setHabit } = useApprovalModal();
 
   const collaboratorInfo = async () => {
     try {
@@ -51,15 +51,13 @@ const Habit = ({ prop, idx, fake }: HabitProps) => {
         },
         body: JSON.stringify({ habitId: prop._id, streak, lastUpdated: date }),
       });
-      console.log(await response.json());
+      await response.json();
     } catch (error) {
-      console.log(error)
+      console.log(error);
+    } finally {
+      window.dispatchEvent(new Event("getHabits"));
     }
-    finally {
-      console.log('m chutiya hun')
-      window.dispatchEvent(new Event('getHabits'))
-    }
-  }
+  };
 
   const calculateStreak = async () => {
     let { dates, lastUpdated } = prop;
@@ -68,32 +66,29 @@ const Habit = ({ prop, idx, fake }: HabitProps) => {
     }
     if (dates.includes(todayDate)) {
       streak = prop.streak + 1;
-      console.log('streak increased')
       lastUpdated = todayDate;
-      updateHabit(lastUpdated)
     } else if (
       !dates.includes(new Date(Date.now() - 86400000).toJSON().substring(0, 10))
     ) {
-      console.log('streak reset')
       streak = 0;
-      updateHabit(lastUpdated)
     }
+    updateHabit(lastUpdated!);
   };
-  
+
   useEffect(() => {
     calculateStreak();
     if (prop.bro) collaboratorInfo();
   }, []);
 
-  gsap.registerPlugin(Draggable)
+  gsap.registerPlugin(Draggable);
 
-  useGSAP(()=>{
-    Draggable.create('#habit')
-  },[])
+  useGSAP(() => {
+    Draggable.create("#habit");
+  }, []);
 
   return (
     <div
-    id="habit"
+      id="habit"
       style={{ backgroundColor: `${bgColors[idx % 4]}` }}
       className={`${
         idx % 2 === 0 ? "-skew-y-1 skew-x-1" : "skew-y-1 -skew-x-1"
@@ -139,7 +134,9 @@ const Habit = ({ prop, idx, fake }: HabitProps) => {
           {days.map((day, idx) => (
             <div
               key={idx + day}
-              onClick={()=>{OnOpen(),setHabit({...prop,broName:bro})}}
+              onClick={() => {
+                OnOpen(), setHabit({ ...prop });
+              }}
               className={`rounded-full ${
                 fake ? "size-5 p-1.5" : "size-6 p-2.5"
               }  flex justify-center items-center  ${
@@ -150,14 +147,16 @@ const Habit = ({ prop, idx, fake }: HabitProps) => {
                 )
                   ? "bg-[#8765e8] text-white"
                   : "border-[#8765e8] border text-[#8765e8]"
-              } ${!fake && idx === todayIdx && "animate-bounce cursor-pointer"}`}
+              } ${
+                !fake && idx === todayIdx && "animate-bounce cursor-pointer"
+              }`}
             >
               {day}
             </div>
           ))}
         </div>
       </div>
-      <p className="text-[#352364] font-medium">MAX STREAK: {streak}</p>
+      <p className="text-[#352364] font-medium">MAX STREAK: {prop.maxStreak}</p>
     </div>
   );
 };

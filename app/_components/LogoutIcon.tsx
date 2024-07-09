@@ -7,8 +7,8 @@ const LogoutIcon = () => {
   const handleLogout = async () => {
     try {
       const res = await fetch("/api/users/logout", { method: "POST" });
-      if (res.status === 200) router.push("/");
-      console.log(await res.json());
+      if (res.status === 200)
+        router.push("/");
     } catch (error) {
       console.log(error);
     }

@@ -10,28 +10,27 @@ connect();
 export async function POST(request: NextRequest) {
   try {
     const isAuthorised: any = await verify(request);
-    console.log(isAuthorised)
     const { habitId, img }: any = await request.json();
     const habit = await Habit.findById(habitId);
-    const TIMEZONE_OFFSET = 60*60*1000*5.5
+    const TIMEZONE_OFFSET = 60 * 60 * 1000 * 5.5;
     // const date = '2024-07-09'
-    const todayDate = ((new Date(Date.now()+TIMEZONE_OFFSET)).toJSON().substring(0,10));
+    const todayDate = new Date(Date.now() + TIMEZONE_OFFSET)
+      .toJSON()
+      .substring(0, 10);
     if (!habit.bro) {
       habit.dates = [todayDate, ...habit.dates];
       const savedHabit = await habit.save();
-      console.log(savedHabit);
     } else {
-      const mate = await User.findById(habit.bro)
-      const owner = await User.findOne({username: isAuthorised.username});
+      const mate = await User.findById(habit.bro);
+      const owner = await User.findOne({ username: isAuthorised.username });
       const noti = await new Noti({
         sender: owner,
         reciever: mate,
-        status: 'Pending',
+        status: "Pending",
         proof: img,
-        habit: habit
-      })
-      const savedNoti = await noti.save()
-      console.log(savedNoti)
+        habit: habit,
+      });
+      const savedNoti = await noti.save();
     }
 
     return NextResponse.json({ message: "Task notified" }, { status: 200 });

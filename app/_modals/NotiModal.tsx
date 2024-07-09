@@ -44,12 +44,12 @@ const NotiModal = () => {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="size-[30rem] bg-black rounded-[4rem] p-10 animate-popup text-this-grey relative overflow-hidden"
+        className="size-[30rem] bg-black rounded-[4rem] p-6 animate-popup text-this-grey relative overflow-hidden"
       >
         <div className="absolute h-10 w-1/2 bottom-[30%] left-0 bg-white/10 rounded-t-xl"></div>
         <div className="absolute bottom-0 w-full h-[30%] backdrop-blur left-0 bg-white/10"></div>
         <h2 className="text-3xl">Notifications</h2>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 h-[200px] overflow-auto">
           <div className="flex gap-2 items-center text-sm mt-8">
             <div className="flex-center gap-0.5">
               <Image
@@ -67,7 +67,7 @@ const NotiModal = () => {
           </div>
           {Noti &&
             Noti.map((notification, index) => (
-              <Notification noti={notification} />
+              <Notification key={`noti${index}`} noti={notification} />
             ))}
         </div>
       </div>

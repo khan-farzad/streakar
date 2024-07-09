@@ -5,7 +5,11 @@ const habitSchema = new mongoose.Schema({
   title: String,
   streak: {
     type: Number,
-    default: 0
+    default: 0,
+  },
+  maxStreak: {
+    type: Number,
+    default: 0,
   },
   lastUpdated: String,
   owner: {

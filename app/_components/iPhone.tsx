@@ -13,16 +13,19 @@ const IPhone = () => {
       title: "Work out for 30 minutes",
       dates: ["2024-07-03", "2024-07-02", "2024-07-01", "2024-06-30"],
       streak: 33,
+      maxStreak: 33,
     },
     {
       title: "Read a book",
       dates: ["2024-07-03", "2024-07-02"],
       streak: 2,
+      maxStreak: 7,
     },
     {
       title: "Do gardening",
       dates: ["2024-07-03", "2024-07-01", "2024-06-30"],
       streak: 1,
+      maxStreak: 9,
     },
   ];
   useGSAP(() => {

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import useApprovalModal from "@/app/_hooks/useApprovalModa";
 
 const Habits = () => {
-  const streak = 5;
   const [habits, setHabit] = useState([]);
   const createHabit = async () => {
     try {

@@ -10,8 +10,8 @@ import InviteModal from "../_modals/InviteModal";
 import NotiModal from "../_modals/NotiModal";
 import ApprovalModal from "../_modals/ApprovalModal";
 
-const page = () => {
-  let [user, setUser] = useState<string>("");
+const Home = () => {
+  const [user, setUser] = useState<string>("");
   const [avatar, setAvatar] = useState();
   const router = useRouter();
   async function getUser() {
@@ -33,7 +33,7 @@ const page = () => {
   });
   return (
     <div className="bg-this-grey min-h-screen">
-      <ApprovalModal/>
+      <ApprovalModal />
       <NotiModal />
       <InviteModal bro={bro} setBro={setBro} />
       <CreateHabitModal bro={bro} setBro={setBro} />
@@ -58,4 +58,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Home;

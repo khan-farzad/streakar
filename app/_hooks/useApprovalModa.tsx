@@ -9,8 +9,9 @@ interface finishModalProps {
     streak: number;
     bro?: number;
     broName?: string;
-    _id: string;
-    lastUpdated: string;
+    _id?: string;
+    lastUpdated?: string;
+    maxStreak: number;
   };
   setHabit: (habit: {
     title: string;
@@ -18,8 +19,9 @@ interface finishModalProps {
     streak: number;
     bro?: number;
     broName?: string;
-    _id: string;
-    lastUpdated: string;
+    _id?: string;
+    lastUpdated?: string;
+    maxStreak: number;
   }) => void;
   OnClose: () => void;
 }
@@ -33,6 +35,7 @@ const useApprovalModal = create<finishModalProps>((set) => ({
     bro: 0,
     _id: "",
     lastUpdated: "",
+    maxStreak: 0,
   },
   setHabit: (newHabit: any) => set({ habit: newHabit }),
   OnOpen: () => set({ isOpen: true }),
