@@ -42,14 +42,14 @@ const Habit = ({ prop, idx, fake }: HabitProps) => {
     } catch (error) {}
   };
 
-  const updateHabit = async (date: string) => {
+  const updateHabit = async (newStreak: number, date: string) => {
     try {
       const response = await fetch("/api/habits/update", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ habitId: prop._id, streak, lastUpdated: date }),
+        body: JSON.stringify({ habitId: prop._id, streak: newStreak, lastUpdated: date }),
       });
       await response.json();
     } catch (error) {
@@ -65,16 +65,15 @@ const Habit = ({ prop, idx, fake }: HabitProps) => {
       return;
     }
     if (dates && dates.includes(todayDate)) {
-      streak = prop.streak + 1;
       lastUpdated = todayDate;
+      updateHabit(prop.streak + 1, lastUpdated!);
     } else if (
       !dates.includes(
         new Date(Date.now() - 86400000).toJSON().substring(0, 10)
       )
     ) {
-      streak = 0;
+      updateHabit(0, lastUpdated!);
     }
-    updateHabit(lastUpdated!);
   };
 
   useEffect(() => {
