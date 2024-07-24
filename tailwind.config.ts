@@ -20,6 +20,7 @@ const config: Config = {
         "this-white": "#C3EAD9",
         "this-border": "#D5D5CB",
         "this-pink": "#FFABD4",
+        "this-blue": "#8765E8",
       }
     },
   },

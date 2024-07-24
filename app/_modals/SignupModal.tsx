@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import useSignupModal from "../_hooks/useSignupModal";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -8,6 +9,7 @@ const SignupModal = () => {
   const router = useRouter();
   const { isOpen, OnClose } = useSignupModal();
   const [isLogin, setIsLogin] = useState(true);
+  const [validationMsg, setValidationMsg] = useState("");
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -17,6 +19,14 @@ const SignupModal = () => {
   const [avatarIndex, setAvatarIndex] = useState<number>(
     Math.floor(Math.random() * 9) + 1
   );
+
+  useEffect(() => {
+    const fn = setTimeout(() => {
+      setValidationMsg("");
+    }, 2000);
+
+    return () => clearTimeout(fn);
+  }, [validationMsg]);
 
   if (!isOpen) return null;
 
@@ -29,7 +39,10 @@ const SignupModal = () => {
   };
 
   const signUp = async () => {
-    if (!isLogin && formData.password != formData.password2) return;
+    if (!isLogin && formData.password != formData.password2) {
+      setValidationMsg("Passwords must match");
+      return;
+    }
     let url = `/api/users/${isLogin ? "login" : "signup"}`;
     try {
       formData.avatarIndex = avatarIndex;
@@ -41,7 +54,7 @@ const SignupModal = () => {
         body: JSON.stringify(formData),
       });
       const data = await response.json();
-      if (response.status === 200) router.push("/habits");
+      setValidationMsg(data.msg);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -68,6 +81,9 @@ const SignupModal = () => {
         <h2 className="text-3xl text-center z-50">
           {isLogin ? "Login" : "Sign Up"}
         </h2>
+        <p className="text-center text-this-blue mt-0.5 min-h-4 text-xs">
+          {validationMsg}
+        </p>
         {!isLogin && (
           <div className=" rounded-full flex-center mt-4 gap-2">
             {avatarIndex > 1 && (

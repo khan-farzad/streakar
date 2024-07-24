@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     const user = await User.findOne({ username });
     if (user) {
       return NextResponse.json(
-        { error: "User already exists" },
+        { msg: "User already exists" },
         { status: 400 }
       );
     }
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     const savedUser = await newUser.save();
 
     return NextResponse.json({
-      message: "User created succesfully",
+      msg: "User created succesfully",
       savedUser,
       success: true,
     });
