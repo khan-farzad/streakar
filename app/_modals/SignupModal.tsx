@@ -54,6 +54,7 @@ const SignupModal = () => {
         body: JSON.stringify(formData),
       });
       const data = await response.json();
+      if (response.status === 200) router.push("/habits");
       setValidationMsg(data.msg);
     } catch (error) {
       console.error("Error:", error);
