@@ -1,7 +1,5 @@
 import useApprovalModal from "@/app/_hooks/useApprovalModa";
 import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import Draggable from "gsap/Draggable";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -79,12 +77,6 @@ const Habit = ({ prop, idx, fake }: HabitProps) => {
   useEffect(() => {
     calculateStreak();
     if (prop.bro) collaboratorInfo();
-  }, []);
-
-  gsap.registerPlugin(Draggable);
-
-  useGSAP(() => {
-    Draggable.create("#habit");
   }, []);
 
   return (
